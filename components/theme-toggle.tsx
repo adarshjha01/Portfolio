@@ -1,30 +1,47 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { Moon, Sun } from "lucide-react";
+import { useSyncExternalStore } from "react";
 
-type Theme = 'light' | 'dark';
+type Theme = "light" | "dark";
+
+const themeChangeEvent = "portfolio-theme-change";
+
+function getTheme(): Theme {
+  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+}
+
+function subscribeToThemeChange(onStoreChange: () => void) {
+  window.addEventListener(themeChangeEvent, onStoreChange);
+  return () => window.removeEventListener(themeChangeEvent, onStoreChange);
+}
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>('light');
-
-  useEffect(() => {
-    const saved = window.localStorage.getItem('portfolio-theme') as Theme | null;
-    const preferred = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    const active = saved ?? preferred;
-    document.documentElement.dataset.theme = active;
-    setTheme(active);
-  }, []);
+  const theme = useSyncExternalStore(
+    subscribeToThemeChange,
+    getTheme,
+    () => "light",
+  );
 
   function toggleTheme() {
-    const next = theme === 'dark' ? 'light' : 'dark';
+    const next = theme === "dark" ? "light" : "dark";
     document.documentElement.dataset.theme = next;
-    window.localStorage.setItem('portfolio-theme', next);
-    setTheme(next);
+    window.localStorage.setItem("portfolio-theme", next);
+    window.dispatchEvent(new Event(themeChangeEvent));
   }
 
   return (
-    <button className="theme-toggle" type="button" onClick={toggleTheme} aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}>
-      <span aria-hidden="true">{theme === 'dark' ? '☼' : '◐'}</span>
+    <button
+      className="theme-toggle"
+      type="button"
+      onClick={toggleTheme}
+      aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} theme`}
+    >
+      {theme === "dark" ? (
+        <Sun aria-hidden="true" />
+      ) : (
+        <Moon aria-hidden="true" />
+      )}
     </button>
   );
 }

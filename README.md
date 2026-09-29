@@ -1,56 +1,43 @@
-# Portfolio
+# Adarsh Jha — Applied AI portfolio
 
-Source code for Adarsh Jha's personal portfolio website.
+Personal portfolio with resume-aligned experience, skills, education, and four project case studies: MediBridge, Multi-Agent Tech Lead Simulator, MCAverse, and Socratic AI Mentor. Includes a supporting YouTube summarization project, responsive layouts, light/dark themes, and a downloadable resume.
 
-## Pages and features
+## Local development
 
-- Homepage with profile, experience, skills, education, and contact links
-- MCAverse project case study
-- MediBridge project case study
-- Multi-Agent Tech Lead Simulator project case study
-- Light and dark themes
-- Downloadable resume
+Use Node.js 22.13+ and pnpm 10.28.2.
 
-## Tech stack
-
-- Next.js App Router
-- React
-- TypeScript
-- Tailwind CSS
-- Vinext and Vite
-
-## Requirements
-
-- Node.js 22.13 or newer
-- pnpm
-
-## Run locally
-
-```bash
-git clone https://github.com/adarshjha01/Portfolio.git
-cd Portfolio
-git checkout codex/recruiter-portfolio
-pnpm install
-pnpm run dev
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+## Verification
 
-## Production build
-
-```bash
-pnpm run build
-pnpm run start
+```sh
+pnpm lint
+pnpm typecheck
+pnpm build
+pnpm start
 ```
 
-## Main files
+This is a standard Next.js App Router application with React, TypeScript, and Tailwind CSS. Cloudflare/Vinext build tooling is no longer required. Per-request CSP nonces allow Next.js hydration without allowing arbitrary inline scripts; pages render dynamically for fresh nonces.
 
-- `app/page.tsx` — homepage content and sections
-- `app/work/[slug]/page.tsx` — reusable project case-study page
-- `lib/projects.ts` — project content, metrics, links, and technical decisions
-- `app/globals.css` — complete design system and responsive styles
-- `components/theme-toggle.tsx` — persistent light/dark theme control
-- `public/Adarsh-Jha-Resume.pdf` — downloadable resume
-- `public/og.png` — social-sharing image
+## Deploy to Vercel after merging
 
-No API keys or environment variables are required for the current version.
+1. Import `adarshjha01/Portfolio` from GitHub.
+2. Select the Next.js framework preset and repository root directory.
+3. Use Node.js 22.x (or a newer supported version). Use the default Next.js output directory, `pnpm build`, and `pnpm install --frozen-lockfile`.
+4. Optionally set `NEXT_PUBLIC_SITE_URL` to the final HTTPS portfolio domain. Without it, metadata uses Vercel's production-domain environment variable.
+5. Deploy, then verify all four project pages, theme switching, and `/Adarsh-Jha-Resume.pdf` from a signed-out browser. Use the production URL in the resume.
+
+No application API keys or database are needed. Do not enable Vercel deployment protection on the public production portfolio.
+
+## Content
+
+- `app/page.tsx`: homepage
+- `lib/projects.ts`: project descriptions and evidence
+- `app/work/[slug]/page.tsx`: case studies
+- `app/globals.css`: styles
+- `public/Adarsh-Jha-Resume.pdf`: current resume
+
+The simulator source URL supplied in the resume returned a public 404 during review; its case study links to the resume instead. Prototype limitations and future evaluation work are identified separately from implemented features.
