@@ -39,7 +39,7 @@ export const projects: Project[] = [
     proof: [
       { value: '98', label: 'Lighthouse performance' },
       { value: '100', label: 'Lighthouse SEO' },
-      { value: '24/7', label: 'Practice access' },
+      { value: 'Live', label: 'Deployed learning platform' },
     ],
     highlights: [
       'Persistent assessment sessions and learning analytics',
@@ -95,7 +95,7 @@ export const projects: Project[] = [
     stack: ['Next.js 16', 'TypeScript', 'Gemini', 'Firebase Admin', 'Firestore', 'Zod', 'Vitest'],
     proof: [
       { value: '2×', label: 'Schema validation layers' },
-      { value: '14', label: 'Unit & component tests' },
+      { value: 'Gemini', label: '2.5 Flash Lite integration' },
       { value: '3', label: 'Input modalities' },
     ],
     highlights: [
@@ -106,7 +106,7 @@ export const projects: Project[] = [
     architecture: [
       'Prescription image + symptoms',
       'Authenticated Next.js API route',
-      'Gemini structured generation',
+      'Gemini 2.5 Flash Lite JSON output',
       'Zod runtime validation',
       'User-scoped Firestore history',
     ],
@@ -127,11 +127,11 @@ export const projects: Project[] = [
     challenge:
       'Multimodal output is probabilistic while the interface needs predictable, typed states. The architecture therefore treats model output as untrusted data until it passes runtime validation.',
     outcome:
-      'The public repository demonstrates a complete multimodal request lifecycle, an explicit security boundary, persisted results, and test coverage—not only a prompt connected to a UI.',
+      'The public source implements authenticated multimodal requests, Gemini JSON generation, Zod validation, and user-scoped Firestore persistence. This is an engineering prototype; clinical accuracy has not been established. Schema validation checks response structure, not medical correctness.',
     next: [
       'Add a domain-specific clinical knowledge retrieval layer',
       'Build evaluation datasets for extraction and risk classification',
-      'Resolve the remaining collection-name and README drift',
+      'Measure latency, cost, and failure rates on a fixed evaluation set',
     ],
     githubUrl: 'https://github.com/adarshjha01/Medibridge',
   },
@@ -140,19 +140,19 @@ export const projects: Project[] = [
     number: '03',
     name: 'Multi-Agent Tech Lead Simulator',
     category: 'Agent Engineering',
-    status: 'Active development',
+    status: 'Portfolio project',
     statusTone: 'progress',
     summary:
       'An agentic software-engineering simulator for generating technical scenarios, coordinating AI review workflows, and returning structured scoring and recommendations.',
     overview:
       'The simulator is designed as an interactive practice environment for engineering judgment. It generates debugging and architecture situations, orchestrates specialist review behavior, and converts the result into structured feedback that can be inspected and improved over time.',
     role: 'AI Product Engineer',
-    period: 'In progress',
-    stack: ['Next.js 15', 'TypeScript', 'React', 'AI Agents', 'REST APIs', 'Zod'],
+    period: 'See current resume',
+    stack: ['Next.js 15', 'TypeScript', 'React', 'Lyzr AI Agents', 'REST APIs'],
     proof: [
       { value: 'Async', label: 'Agent orchestration' },
       { value: 'Typed', label: 'Structured responses' },
-      { value: 'HITL', label: 'Planned review loop' },
+      { value: 'Lyzr', label: 'AI agent integration' },
     ],
     highlights: [
       'Asynchronous orchestration with adaptive polling',
@@ -162,7 +162,7 @@ export const projects: Project[] = [
     architecture: [
       'Scenario request',
       'Orchestration controller',
-      'Specialist agent workflow',
+      'Lyzr AI agent workflow',
       'Schema-validated review',
       'Score & learning recommendations',
     ],
@@ -183,7 +183,7 @@ export const projects: Project[] = [
     challenge:
       'A multi-agent diagram is easy to draw; reliable orchestration is harder. The current work is focused on state, retries, traceability, and proving when multiple agents outperform a simpler workflow.',
     outcome:
-      'The project already establishes the interaction and response contract. The public demo and repository will be linked after the reliability work is complete.',
+      'Implemented scenario generation, structured code reviews, technical scoring, and learning recommendations using Lyzr AI Agents, as described in my resume. Public source is currently unavailable; the next step is to make the workflow independently inspectable.',
     next: [
       'Publish the repository and working demo',
       'Add tracing, retry policy, and token-cost metrics',
@@ -195,3 +195,28 @@ export const projects: Project[] = [
 export function getProject(slug: string) {
   return projects.find((project) => project.slug === slug);
 }
+
+const mentor: Project = {
+  slug: 'socratic-ai-mentor', number: '04', name: 'Socratic AI Mentor',
+  category: 'Conversational AI', status: 'Public prototype', statusTone: 'public',
+  summary: 'A Python learning assistant that guides students through project problems with progressively deeper hints, using LangChain, Groq, and Streamlit.',
+  overview: 'Students describe where they are stuck. A conversational interface retains the session history and prompts Llama 3.1 to respond with a nudge, a conceptual clue, or a step-by-step explanation instead of a direct code solution.',
+  role: 'Developer', period: 'Personal project',
+  stack: ['Python', 'LangChain', 'Groq', 'Llama 3.1 8B', 'Streamlit'],
+  proof: [{value: '3 levels', label: 'Prompted hint progression'}, {value: 'Session', label: 'Conversation history'}, {value: 'Public', label: 'Inspectable Python source'}],
+  highlights: ['LangChain messages and Groq model integration', 'Conversation history in Streamlit session state', 'Prompt-designed hints for student problem solving'],
+  architecture: ['Student question', 'Session conversation history', 'LangChain ChatGroq', 'Llama 3.1 8B Instant', 'Hint rendered in Streamlit'],
+  decisions: [
+    {title: 'Guide the reasoning', body: 'The system prompt describes three hint levels: a leading question, a conceptual clue, and an explanation of the algorithm. Progression is model-driven rather than enforced by a state machine.'},
+    {title: 'Preserve conversational context', body: 'Human and AI messages are kept in Streamlit session state and sent with the next request so follow-up questions retain context.'},
+    {title: 'Keep the prototype focused', body: 'A small Python application makes the prompt and message lifecycle easy to inspect. API configuration comes from Streamlit secrets, with a visible error when configuration is missing.'}
+  ],
+  challenge: 'A prompt can request that a model avoid giving code, but cannot guarantee it. Evaluating hint quality and instruction adherence is the next engineering challenge.',
+  outcome: 'The repository demonstrates a complete conversational LLM integration in Python. It does not yet establish learning outcomes, persistent cross-session memory, or measured instruction adherence.',
+  next: ['Evaluate hint quality and direct-answer leakage on fixed student scenarios', 'Add explicit hint-level state and a bounded context window', 'Add request tests, latency measurements, and persistent sessions'],
+  githubUrl: 'https://github.com/adarshjha01/socratic-ai-mentor.'
+};
+projects.push(mentor);
+const order = ['medibridge', 'tech-lead-simulator', 'mcaverse', 'socratic-ai-mentor'];
+projects.sort((a, b) => order.indexOf(a.slug) - order.indexOf(b.slug));
+projects.forEach((project, index) => { project.number = String(index + 1).padStart(2, '0'); });
